@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     TwitterClient client;
     RecyclerView rvTweets;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     List<Tweet> tweets;
     TweetsAdapter adapter;
@@ -37,6 +39,19 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Find the recycler view
         rvTweets = findViewById(R.id.rvTweets);
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i("dfs", "Swipe refresh successful");
+                populateHomeTimeline();
+            }
+        });
 
         // Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
@@ -58,7 +73,16 @@ public class TimelineActivity extends AppCompatActivity {
                 JSONArray jsonArray = json.jsonArray;
                 try {
                     Log.i("dfs", "jsonSuccess");
-                    tweets.addAll(Tweet.fromJsonArray(jsonArray));
+
+                    // Remember to CLEAR OUT old items before appending in the new ones
+                    adapter.clear();
+
+                    // ...the data has come back, add new items to your adapter...
+                    adapter.addAll(Tweet.fromJsonArray(jsonArray));
+
+                    // Now we call setRefreshing(false) to signal refresh has finished
+                    swipeRefreshLayout.setRefreshing(false);
+
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     Log.e("dfs", "jsonFailed", e);

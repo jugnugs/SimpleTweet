@@ -49,24 +49,39 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         return tweets.size();
     }
 
+    // Clean all elements of the recycler
+    public void clear() {
+        tweets.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Tweet> list) {
+        tweets.addAll(list);
+        notifyDataSetChanged();
+    }
+
     // Define a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvBody;
         TextView tvScreenName;
         ImageView ivProfileImage;
+        TextView tvTimeStamp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
+            tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
         }
 
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+            tvTimeStamp.setText(tweet.timeStamp);
         }
     }
 

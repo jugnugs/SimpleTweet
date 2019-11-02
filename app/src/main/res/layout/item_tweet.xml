@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ivProfileImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -29,4 +29,14 @@
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfileImage"
         tools:text="iuiui" />
+
+    <TextView
+        android:id="@+id/tvTimeStamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvBody"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/tvScreenName"
+        tools:text="11hr" />
 </RelativeLayout>
