@@ -37,6 +37,8 @@ public class ComposeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         composeLayout = findViewById(R.id.composeLayout);
         edtTweet = findViewById(R.id.edtTweet);
         btnTweet = findViewById(R.id.btnTweet);
